@@ -1,0 +1,79 @@
+/*
+Set the main wrapper component to
+take up the entire height of the page
+ */
+.App {
+    min-height: 100vh;
+}
+/*
+To use Flex box we need to set the display
+setting of the container component to flex.
+The we set the direction of the wrapped
+components. By default flex box will order
+them by row, but we can also tell it to do
+it by column.
+*/
+.App {
+    display: flex;
+    flex-direction: column;
+}
+/*
+Something similar is done to the body
+element, except we order the wrapped
+component as rows.
+*/
+.App .body {
+    /*display: flex;
+    flex-direction: row;*/
+
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    min-height: 0;
+}
+/*
+Flex box let's us reorder the way the
+elements are placed inside the wrapper
+component. Using the order rule, we move
+the sidebar to the left of the content
+component. We also set its width to 12em
+and set its flex properties so it doesn't
+grow or shrink with the rest of the page.
+*/
+.body .sidebar {
+    border-right: 1px solid #eee;
+    order: -1;
+    max-width: 14em;
+    flex-grow: 0;    /* Defined the ability to grow */
+    flex-shrink: 0;  /* Defines the ability to shrink */
+    flex-basis: 14em;/* Default value of the element before distributing the remaining space */
+}
+/*
+Lastly we give some custom height to our
+header and footer components.
+*/
+.App .header{
+    height: 48px;
+}
+
+.App .footer {
+    height: 4em;
+}
+
+/*.body .container {
+    padding: 0 25px;
+}*/
+
+
+.content{
+    background-color: #faf9f8;
+    flex-basis: 0;
+    flex-grow: 1;
+    /*height: calc(100vh - 100px);*/
+    overflow-y: auto;
+    padding: 0 40px 64px 32px;
+}

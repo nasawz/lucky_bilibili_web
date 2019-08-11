@@ -1,0 +1,5 @@
+mutation CloudFun($functionName: String!, $params: Object!) {
+  functions {
+    call(functionName: $functionName, params: $params)
+  }
+}
