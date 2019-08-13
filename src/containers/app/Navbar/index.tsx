@@ -21,9 +21,9 @@ function onChangeHandler() {
 const NavBar = () => (
   <div className="NavBar">
     <div className="logo ms-font-xl">
-      <strong>Office Fabric UI App</strong>
+      <strong>B站抽奖助手</strong>
     </div>
-    <div className="searchbox">
+    {/* <div className="searchbox">
       <SearchBox
         placeholder="Search"
         onSearch={onSearchHandler}
@@ -31,7 +31,7 @@ const NavBar = () => (
         onBlur={onBlurHandler}
         onChange={onChangeHandler}
       />
-    </div>
+    </div> */}
   </div>
 );
 

@@ -777,22 +777,22 @@ export type WithinOperator = {
   /** This is the box to be specified. */
   _box: BoxOperator;
 };
-export type CloudFunMutationVariables = {
+export type CloudfunMutationVariables = {
   functionName: Scalars['String'];
   params: Scalars['Object'];
 };
 
-export type CloudFunMutation = { __typename?: 'Mutation' } & {
+export type CloudfunMutation = { __typename?: 'Mutation' } & {
   functions: Maybe<{ __typename?: 'FunctionsMutation' } & Pick<FunctionsMutation, 'call'>>;
 };
 
-export const CloudFunDocument: DocumentNode = {
+export const CloudfunDocument: DocumentNode = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'mutation',
-      name: { kind: 'Name', value: 'CloudFun' },
+      name: { kind: 'Name', value: 'cloudfun' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -851,6 +851,6 @@ export const CloudFunDocument: DocumentNode = {
   ]
 };
 
-export function useCloudFunMutation() {
-  return Urql.useMutation<CloudFunMutation, CloudFunMutationVariables>(CloudFunDocument);
+export function useCloudfunMutation() {
+  return Urql.useMutation<CloudfunMutation, CloudfunMutationVariables>(CloudfunDocument);
 }

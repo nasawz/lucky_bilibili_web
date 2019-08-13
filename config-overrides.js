@@ -23,6 +23,11 @@ const webpackConfig = () => (config, env) => {
   config = rewireWebpackOutput(config, env, {
     publicPath: './'
   });
+  config.module.rules.push({
+    test: /\.mjs$/,
+    include: /node_modules/,
+    type: 'javascript/auto'
+  });
   return config;
 };
 module.exports = {

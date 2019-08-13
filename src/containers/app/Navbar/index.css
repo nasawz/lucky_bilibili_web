@@ -1,20 +1,21 @@
 .NavBar {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 1em ;
-    color: white;
-    background-color: #0078d4;
-    justify-content: space-between;
-    font-size: 16px;
-    font-weight: 600;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  color: white;
+  background-color: #01a0a6;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: rgba(0, 0, 0, 0.133) 0px 6.4px 14.4px 0px, rgba(0, 0, 0, 0.11) 0px 1.2px 3.6px 0px;
 }
 
 .NavBar .searchbox {
-    width: 20em;
+  width: 20em;
 }
 
 .NavBar .searchbox .ms-SearchBox {
-    margin-bottom: 0;
-    background-color: white;
+  margin-bottom: 0;
+  background-color: white;
 }
