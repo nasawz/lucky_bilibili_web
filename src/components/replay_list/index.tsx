@@ -4,7 +4,13 @@ import * as _ from 'lodash';
 import { FocusZone, FocusZoneDirection } from 'office-ui-fabric-react/lib/FocusZone';
 import { SelectionMode, colGroupProperties } from '@uifabric/utilities';
 import { useModel } from 'flooks';
-import { DetailsList, IColumn, DetailsListLayoutMode } from 'office-ui-fabric-react';
+import {
+  DetailsList,
+  IColumn,
+  DetailsListLayoutMode,
+  Stack,
+  CompoundButton
+} from 'office-ui-fabric-react';
 
 interface IReplayListProps {}
 
@@ -52,8 +58,7 @@ let fansFilter = (replies, fans) => {
   }
 };
 const ReplayList: React.FunctionComponent<IReplayListProps> = (props) => {
-  let { vlog, setting } = useModel('vlog');
-  // console.log(vlog);
+  let { vlog, setting, awards } = useModel('vlog');
 
   let { replies } = vlog;
   let { once, fans, include, time_end, exclude } = setting;
@@ -149,31 +154,45 @@ const ReplayList: React.FunctionComponent<IReplayListProps> = (props) => {
     }
   ];
   return (
-    <FocusZone direction={FocusZoneDirection.vertical}>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <h2 className="Heading">留言用户列表</h2>
-        <h2>用户数:{replies.length}</h2>
-      </div>
-      <div style={{ overflow: 'auto', maxHeight: 600 }} data-is-scrollable={true}>
-        <DetailsList
-          items={replies}
-          compact={true}
-          columns={columns}
-          selectionMode={SelectionMode.none}
-          // getKey={this._getKey}
-          setKey="set"
-          layoutMode={DetailsListLayoutMode.justified}
-          isHeaderVisible={true}
-          // selection={this._selection}
-          selectionPreservedOnEmptyClick={true}
-          // onItemInvoked={this._onItemInvoked}
-          enterModalSelectionOnTouch={true}
-          ariaLabelForSelectionColumn="Toggle selection"
-          ariaLabelForSelectAllCheckbox="Toggle selection for all items"
-          checkButtonAriaLabel="Row checkbox"
-        />
-      </div>
-    </FocusZone>
+    <>
+      <Stack tokens={{ childrenGap: 20 }}>
+        <div className="ContentCard">
+          <FocusZone direction={FocusZoneDirection.vertical}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <h2 className="Heading">留言用户列表</h2>
+              <h2>用户数:{replies.length}</h2>
+            </div>
+            <div style={{ overflow: 'auto', maxHeight: 600 }} data-is-scrollable={true}>
+              <DetailsList
+                items={replies}
+                compact={true}
+                columns={columns}
+                selectionMode={SelectionMode.none}
+                // getKey={this._getKey}
+                setKey="set"
+                layoutMode={DetailsListLayoutMode.justified}
+                isHeaderVisible={true}
+                // selection={this._selection}
+                selectionPreservedOnEmptyClick={true}
+                // onItemInvoked={this._onItemInvoked}
+                enterModalSelectionOnTouch={true}
+                ariaLabelForSelectionColumn="Toggle selection"
+                ariaLabelForSelectAllCheckbox="Toggle selection for all items"
+                checkButtonAriaLabel="Row checkbox"
+              />
+            </div>
+          </FocusZone>
+        </div>
+      </Stack>
+      <Stack tokens={{ childrenGap: 20 }}>
+        <CompoundButton
+          primary={true}
+          secondaryText={`抽奖总人数${replies.length}人  共抽出${awards.length}人`}
+        >
+          开始抽奖
+        </CompoundButton>
+      </Stack>
+    </>
   );
 };
 

@@ -1,21 +1,5 @@
 import * as React from 'react';
-import {
-  PrimaryButton,
-  TextField,
-  IRenderFunction,
-  Label,
-  IconButton,
-  Checkbox,
-  CompoundButton
-} from 'office-ui-fabric-react';
-import {
-  IPersonaSharedProps,
-  Persona,
-  PersonaInitialsColor,
-  PersonaSize
-} from 'office-ui-fabric-react/lib/Persona';
-import { DatePicker, DayOfWeek, IDatePickerStrings } from 'office-ui-fabric-react';
-import { Stack, IStackProps } from 'office-ui-fabric-react/lib/Stack';
+import { Stack } from 'office-ui-fabric-react/lib/Stack';
 import ReplayList from '@components/replay_list';
 import Step1 from '@components/steps/step1';
 import Step2 from '@components/steps/step2';
@@ -46,16 +30,7 @@ export default class Home extends React.Component<IHomeProps> {
           </Stack.Item>
           <Stack.Item grow={1}>
             <Stack tokens={{ childrenGap: 20 }}>
-              <Stack tokens={{ childrenGap: 20 }}>
-                <div className="ContentCard">
-                  <ReplayList />
-                </div>
-              </Stack>
-              <Stack tokens={{ childrenGap: 20 }}>
-                <CompoundButton primary={true} secondaryText="抽奖总人数100人  共抽出3人">
-                  开始抽奖
-                </CompoundButton>
-              </Stack>
+              <ReplayList />
             </Stack>
           </Stack.Item>
         </Stack>

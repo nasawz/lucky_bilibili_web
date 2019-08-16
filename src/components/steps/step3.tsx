@@ -14,7 +14,6 @@ import {
   DefaultButton
 } from 'office-ui-fabric-react';
 import { useModel } from 'flooks';
-import { check } from 'prettier';
 
 export interface IStep3Props {}
 const DayPickerStrings: IDatePickerStrings = {
