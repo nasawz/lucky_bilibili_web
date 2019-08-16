@@ -1,65 +1,79 @@
 import * as React from 'react';
 import tinytime from 'tinytime';
+import * as _ from 'lodash';
 import { FocusZone, FocusZoneDirection } from 'office-ui-fabric-react/lib/FocusZone';
-import {
-  IPersonaProps,
-  IPersonaSharedProps,
-  Persona,
-  PersonaSize,
-  PersonaPresence
-} from 'office-ui-fabric-react/lib/Persona';
-import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { IRenderFunction, colGroupProperties, SelectionMode } from '@uifabric/utilities';
+import { SelectionMode, colGroupProperties } from '@uifabric/utilities';
 import { useModel } from 'flooks';
 import { DetailsList, IColumn, DetailsListLayoutMode } from 'office-ui-fabric-react';
 
 interface IReplayListProps {}
-const examplePersona: IPersonaSharedProps = {
-  // imageInitials: 'AL',
-  secondaryText: 'Software Engineer',
-  tertiaryText: 'In a meeting',
-  optionalText: 'Available at 4:00pm'
+
+let onceFilter = (replies, once) => {
+  if (!once) {
+    return replies;
+  } else {
+    return _.values(_.keyBy(replies, 'uname'));
+  }
+};
+let includeFilter = (replies, keystr) => {
+  if (keystr == '') {
+    return replies;
+  } else {
+    return _.filter(replies, function(o) {
+      return o.message.indexOf(keystr) >= 0;
+    });
+  }
+};
+let timeFilter = (replies, time_end) => {
+  if (!time_end) {
+    return replies;
+  } else {
+    return _.filter(replies, function(o) {
+      return o.ctime * 1000 < time_end;
+    });
+  }
+};
+let nameFilter = (replies, exclude) => {
+  if (exclude.length == 0) {
+    return replies;
+  } else {
+    return _.filter(replies, function(o) {
+      return _.indexOf(exclude, o.uname) < 0;
+    });
+  }
+};
+let fansFilter = (replies, fans) => {
+  if (!fans) {
+    return replies;
+  } else {
+    return _.filter(replies, function(o) {
+      return o.fans;
+    });
+  }
 };
 const ReplayList: React.FunctionComponent<IReplayListProps> = (props) => {
-  let { vlog } = useModel('vlog');
-  let { replies } = vlog;
+  let { vlog, setting } = useModel('vlog');
+  // console.log(vlog);
 
-  let _onRenderSecondaryText: IRenderFunction<any> = (props: IPersonaProps): JSX.Element => {
-    return (
-      <div>
-        <Icon iconName="Suitcase" styles={{ root: { marginRight: 5 } }} />
-        {props.secondaryText}
-      </div>
-    );
-  };
-  let _onRenderCell = (item: any, index: number | undefined): JSX.Element => {
-    console.log(item);
-    let { member, content } = item;
-    return (
-      <div key={item.rpid} style={{ display: 'flex' }}>
-        <div style={{ flexShrink: 0 }}>
-          <Persona
-            {...examplePersona}
-            text={member.uname}
-            size={PersonaSize.tiny}
-            secondaryText={member.sign}
-            styles={{ root: { margin: '0 0 10px 0' } }}
-          />
-        </div>
-        <div
-          style={{
-            marginLeft: 10,
-            overflow: 'hidden',
-            // flexGrow: 1,
-            display: 'flex',
-            alignItems: 'center'
-          }}
-        >
-          {content.message}
-        </div>
-      </div>
-    );
-  };
+  let { replies } = vlog;
+  let { once, fans, include, time_end, exclude } = setting;
+  replies = _.map(replies, (_rep) => {
+    let rep = {
+      uname: _rep.member.uname,
+      fans: _rep.member.fans_detail ? true : false,
+      message: _rep.content.message,
+      ctime: _rep.ctime
+    };
+    return rep;
+  });
+
+  replies = onceFilter(replies, once);
+  replies = includeFilter(replies, include);
+  // replies = timeFilter(replies, new Date('2019-8-2 9:29:16').getTime());
+  replies = timeFilter(replies, time_end);
+  replies = nameFilter(replies, exclude);
+  replies = fansFilter(replies, fans);
+  replies = _.orderBy(replies, ['ctime'], ['desc']);
 
   const columns: IColumn[] = [
     {
@@ -87,7 +101,7 @@ const ReplayList: React.FunctionComponent<IReplayListProps> = (props) => {
       data: 'string',
       isPadded: true,
       onRender: (item) => {
-        return item.member.uname;
+        return item.uname;
       }
     },
     {
@@ -101,7 +115,7 @@ const ReplayList: React.FunctionComponent<IReplayListProps> = (props) => {
       data: 'string',
       isPadded: true,
       onRender: (item) => {
-        return item.member.fans_detail ? '是' : '';
+        return item.fans ? '是' : '';
       }
     },
     {
@@ -130,7 +144,7 @@ const ReplayList: React.FunctionComponent<IReplayListProps> = (props) => {
       data: 'string',
       isPadded: true,
       onRender: (item) => {
-        return item.content.message;
+        return item.message;
       }
     }
   ];

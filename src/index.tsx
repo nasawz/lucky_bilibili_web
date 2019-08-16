@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 
 import './styles';
-import './mocks';
+// import './mocks';
 import Root from './root';
 
 initializeIcons();

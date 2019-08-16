@@ -5,18 +5,18 @@ store.addPlugin(expirePlugin);
 
 export default {
   state: {
-    vlog: { info: { title: '' }, replies: [] },
-    awards: [{ title: '奖品名称', count: 1 }]
+    // vlog: { info: { title: '' }, replies: [] },
+    vlog: store.get(`VLOG~https://www.bilibili.com/video/av61604041`),
+    awards: [{ title: '奖品名称', count: 1 }],
+    setting: {
+      once: false,
+      fans: false,
+      include: '',
+      time_end: null,
+      exclude: []
+    }
   },
   actions: ({ model, setState }) => ({
-    // increment() {
-    //   const { count } = model(); // Get own model
-    //   setState({ count: count + 1 }); // Update own state
-    // },
-    // decrement() {
-    //   const { count } = model();
-    //   setState({ count: count - 1 });
-    // },
     changeTitle(title) {
       const { vlog } = model();
       setState({ vlog: Object.assign({}, vlog, { info: { title: title } }) });
@@ -26,7 +26,7 @@ export default {
         let vlog = store.get(`VLOG~${url}`);
         if (!vlog) {
           vlog = await Parse.Cloud.run('catch_vlog', { url });
-          let expiration = new Date().getTime() + 10 * 60000;
+          let expiration = new Date().getTime() + 10000 * 60000;
           store.set(`VLOG~${url}`, vlog, expiration);
         }
         setState({ vlog });
