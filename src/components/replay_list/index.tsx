@@ -29,7 +29,7 @@ let timeFilter = (replies, time_end) => {
     return replies;
   } else {
     return _.filter(replies, function(o) {
-      return o.ctime * 1000 < time_end;
+      return o.ctime * 1000 < time_end.getTime() + 86400000;
     });
   }
 };
