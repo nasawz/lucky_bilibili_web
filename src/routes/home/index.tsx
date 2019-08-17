@@ -12,8 +12,8 @@ export default class Home extends React.Component<IHomeProps> {
     return (
       <div className="container">
         <Stack horizontal tokens={{ childrenGap: 20 }}>
-          <Stack.Item grow={1}>
-            <Stack tokens={{ childrenGap: 20 }}>
+          <Stack.Item>
+            <Stack tokens={{ childrenGap: 20 }} style={{ minWidth: 500 }}>
               <div className="ContentCard">
                 <h2 className="Heading">第一步：粘贴Bilibili视频地址，读取留言用户</h2>
                 <Step1 />

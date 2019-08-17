@@ -1,0 +1,21 @@
+overwrite: true
+schema:
+  - http://localhost:1447/api/graphql:
+      headers:
+        X-Parse-Application-Id: xxxx
+        X-Parse-Master-Key: xxxx
+config:
+  noGraphQLTag: true
+  withHooks: true
+  withComponent: false
+  namingConvention:
+    typeNames: change-case#pascalCase
+    enumValues: change-case#upperCase
+generates:
+  ./src/graphql/components/index.tsx:
+    documents:
+      - ./src/graphql/queries/*.graphql
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-urql
