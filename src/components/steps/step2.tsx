@@ -6,10 +6,8 @@ import {
   TextField,
   Label,
   IconButton,
-  IRenderFunction,
-  colGroupProperties
+  IRenderFunction
 } from 'office-ui-fabric-react';
-import { Shimmer, ShimmerElementType } from 'office-ui-fabric-react/lib/Shimmer';
 import { useModel } from 'flooks';
 
 export interface IStep2Props {}
@@ -44,6 +42,9 @@ export default function Step2(props: IStep2Props) {
   function _getErrorMessage4Count(count) {
     if (count == '') {
       return '请输入名额';
+    }
+    if (count == '0') {
+      return '名额需大于0';
     }
     if (!count.match(/^\d*$/)) {
       return '请输入数字';

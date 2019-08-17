@@ -9,7 +9,12 @@ import {
   IColumn,
   DetailsListLayoutMode,
   Stack,
-  CompoundButton
+  CompoundButton,
+  Dialog,
+  DialogFooter,
+  PrimaryButton,
+  DefaultButton,
+  DialogType
 } from 'office-ui-fabric-react';
 
 interface IReplayListProps {}
@@ -59,6 +64,8 @@ let fansFilter = (replies, fans) => {
 };
 const ReplayList: React.FunctionComponent<IReplayListProps> = (props) => {
   let { vlog, setting, awards } = useModel('vlog');
+  const [hideDialog, setHideDialog] = React.useState(true);
+  const [winners, setWinners] = React.useState([{ uname: '', award: '' }]);
 
   let { replies } = vlog;
   let { once, fans, include, time_end, exclude } = setting;
@@ -79,7 +86,16 @@ const ReplayList: React.FunctionComponent<IReplayListProps> = (props) => {
   replies = nameFilter(replies, exclude);
   replies = fansFilter(replies, fans);
   replies = _.orderBy(replies, ['ctime'], ['desc']);
-
+  let allAwards: Array<any> = [];
+  _.map(awards, (award) => {
+    for (let index = 0; index < award.count; index++) {
+      allAwards.push(award.title);
+    }
+  });
+  let isDisabled = false;
+  if (awards.length == 0 || replies.length == 0 || allAwards.length > replies.length) {
+    isDisabled = true;
+  }
   const columns: IColumn[] = [
     {
       key: 'index',
@@ -153,6 +169,66 @@ const ReplayList: React.FunctionComponent<IReplayListProps> = (props) => {
       }
     }
   ];
+  const columns_award: IColumn[] = [
+    {
+      key: 'index',
+      name: '序号',
+      fieldName: 'index',
+      minWidth: 10,
+      maxWidth: 10,
+      isRowHeader: true,
+      isResizable: true,
+      data: 'string',
+      isPadded: true,
+      onRender: (item, index) => {
+        return index ? index! + 1 : 1;
+      }
+    },
+    {
+      key: 'uname',
+      name: '中奖者用户名',
+      fieldName: 'uname',
+      minWidth: 120,
+      maxWidth: 120,
+      isRowHeader: true,
+      isResizable: true,
+      data: 'string',
+      isPadded: true,
+      onRender: (item) => {
+        return item.uname;
+      }
+    },
+    {
+      key: 'award',
+      name: '奖品',
+      fieldName: 'award',
+      minWidth: 120,
+      maxWidth: 120,
+      isRowHeader: true,
+      isResizable: true,
+      data: 'string',
+      isPadded: true,
+      onRender: (item) => {
+        return item.award;
+      }
+    }
+  ];
+
+  let doLottery = () => {
+    let _winners: Array<{ uname: string; award: string }> = [];
+    let users = _.sampleSize(replies, allAwards.length);
+    for (let index = 0; index < allAwards.length; index++) {
+      const user = users[index];
+      const award = allAwards[index];
+      _winners.push({
+        uname: user.uname,
+        award
+      });
+    }
+    setWinners(_winners);
+    setHideDialog(false);
+  };
+
   return (
     <>
       <Stack tokens={{ childrenGap: 20 }}>
@@ -186,11 +262,68 @@ const ReplayList: React.FunctionComponent<IReplayListProps> = (props) => {
       </Stack>
       <Stack tokens={{ childrenGap: 20 }}>
         <CompoundButton
+          disabled={isDisabled}
           primary={true}
-          secondaryText={`抽奖总人数${replies.length}人  共抽出${awards.length}人`}
+          secondaryText={`抽奖总人数${replies.length}人  共抽出${allAwards.length}人`}
+          onClick={() => {
+            doLottery();
+          }}
         >
           开始抽奖
         </CompoundButton>
+        <Dialog
+          hidden={hideDialog}
+          onDismiss={() => {
+            setHideDialog(true);
+          }}
+          dialogContentProps={{
+            type: DialogType.close,
+            title: '抽奖结果'
+          }}
+          minWidth={600}
+          modalProps={{
+            // titleAriaId: this._labelId,
+            // subtitleAriaId: this._subTextId,
+            isBlocking: false,
+            styles: { main: { maxWidth: 600 } }
+          }}
+        >
+          <div>
+            <div
+              style={{ overflow: 'auto', maxHeight: 300, minHeight: 100 }}
+              data-is-scrollable={true}
+            >
+              <DetailsList
+                items={winners}
+                compact={true}
+                columns={columns_award}
+                selectionMode={SelectionMode.none}
+                // getKey={this._getKey}
+                setKey="set"
+                layoutMode={DetailsListLayoutMode.justified}
+                isHeaderVisible={true}
+                // selection={this._selection}
+                selectionPreservedOnEmptyClick={true}
+                // onItemInvoked={this._onItemInvoked}
+                enterModalSelectionOnTouch={true}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <PrimaryButton
+              onClick={() => {
+                setHideDialog(true);
+              }}
+              text="保存结果"
+            />
+            <DefaultButton
+              onClick={() => {
+                setHideDialog(true);
+              }}
+              text="取消"
+            />
+          </DialogFooter>
+        </Dialog>
       </Stack>
     </>
   );

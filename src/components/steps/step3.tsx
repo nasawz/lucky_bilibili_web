@@ -142,14 +142,15 @@ export default function Step3(props: IStep3Props) {
         <Stack horizontal wrap tokens={{ childrenGap: 10 }}>
           {_.map(setting.exclude, (name, index) => {
             return (
-              <Persona
-                key={index}
-                text={name}
-                onClick={() => {
-                  removeExclude(name);
-                }}
-                size={PersonaSize.size8}
-              />
+              <div key={index} style={{ cursor: 'pointer' }}>
+                <Persona
+                  text={name}
+                  onClick={() => {
+                    removeExclude(name);
+                  }}
+                  size={PersonaSize.size8}
+                />
+              </div>
             );
           })}
         </Stack>
