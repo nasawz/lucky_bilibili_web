@@ -4,6 +4,12 @@ import expirePlugin from 'store/plugins/expire';
 import * as _ from 'lodash';
 import uuid from 'uuid';
 
+// mock data start
+import { data } from './data';
+let expiration = new Date().getTime() + 10000 * 60000;
+store.set(`VLOG~https://www.bilibili.com/video/av61604041`, data, expiration);
+// mock data end
+
 store.addPlugin(expirePlugin);
 export default {
   state: {
@@ -76,7 +82,7 @@ export default {
         let vlog = store.get(`VLOG~${url}`);
         if (!vlog) {
           vlog = await Parse.Cloud.run('catch_vlog', { url });
-          let expiration = new Date().getTime() + 10000 * 60000;
+          let expiration = new Date().getTime() + 60000;
           store.set(`VLOG~${url}`, vlog, expiration);
         }
         setState({ vlog });

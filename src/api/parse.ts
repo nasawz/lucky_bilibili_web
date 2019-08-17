@@ -1,5 +1,5 @@
 import Parse from 'parse';
-Parse.initialize('sd2sdfsks996ks', '');
+Parse.initialize('xxxxxxxxxxx', '');
 Parse.serverURL = '/api/parse';
 
 export default Parse;
