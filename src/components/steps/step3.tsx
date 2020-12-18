@@ -79,7 +79,7 @@ export default function Step3(props: IStep3Props) {
           }}
         />
         <Checkbox
-          label="必须是UP主的粉丝"
+          label="必须是UP主的应援团"
           checked={setting.fans}
           onChange={(e, checked) => {
             changeFans(checked);

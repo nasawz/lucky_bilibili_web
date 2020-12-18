@@ -1,34 +1,39 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { Route, HashRouter as Router, Switch } from 'react-router-dom';
-import App from './containers/app';
-import Intl from './intl';
-import { store } from './store';
-import { Provider as UrqlProvider, createClient } from 'urql';
+import React, { Suspense } from 'react';
 
-export interface IRootProps {}
-const client = createClient({
-  url: '/api/graphql',
-  fetchOptions: {
-    headers: {
-      'X-Parse-Application-Id': 'sd2sdfsks996ks'
+const App = React.lazy(() => import('./app'));
+export interface IRootProps {
+}
+
+export default function Root(props: IRootProps) {
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    if (!window['__globalData']) {
+      window['__globalData'] = new Map();
     }
+
+    fetch('/cloudbaseenv.json')
+      .then(res => {
+        if (res.status >= 400) {
+          throw new Error('Bad response from server');
+        }
+        return res.json();
+      })
+      .then(data => {
+        window['__globalData'].cloudbaseenv = data;
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+  if (loading) {
+    return null;
   }
-});
-export default class Root extends React.Component<IRootProps> {
-  public render() {
-    return (
-      <Provider store={store}>
-        <UrqlProvider value={client}>
-          <Router>
-            <Intl>
-              <Switch>
-                <Route path="/" component={App} />
-              </Switch>
-            </Intl>
-          </Router>
-        </UrqlProvider>
-      </Provider>
-    );
-  }
+
+  return (
+    <Suspense fallback={<div />}>
+      <App />
+    </Suspense>
+  );
 }

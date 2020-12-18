@@ -1,0 +1,56 @@
+{
+  "version": "2.0",
+  "envId": "{{env.ENV_ID}}",
+  "$schema": "https://framework-1258016615.tcloudbaseapp.com/schema/latest.json",
+  "framework": {
+    "name": "lucky-bilibili",
+    "plugins": {
+      "react": {
+        "use": "@cloudbase/framework-plugin-website",
+        "inputs": {
+          "installCommand": "npm i",
+          "buildCommand": "npm run build",
+          "outputPath": "build",
+          "cloudPath": "{{env.deployPath}}",
+          "ignore": [
+            ".git",
+            ".github",
+            "node_modules",
+            "cloudbaserc.js"
+          ],
+          "envVariables": {
+            "HTTP_REQ_URL": "{{env.httpReqUrl}}",
+            "ENV_ID": "{{env.ENV_ID}}"
+          }
+        }
+      },
+      "function": {
+        "use": "@cloudbase/framework-plugin-function",
+        "inputs": {
+          "functionRoot": "functions",
+          "functions": [
+            {
+              "name": "catch-vlog",
+              "timeout": 60,
+              "installDependency": true,
+              "handler": "index.main"
+            }
+          ]
+        }
+      }
+    },
+    "requirement": {
+      "environment": {
+        "deployPath": {
+          "description": "部署路径",
+          "required": true,
+          "default": "/lucky-bilibili/"
+        },
+        "httpReqUrl": {
+          "description": "HTTP访问域名",
+          "required": true
+        }
+      }
+    }
+  }
+}

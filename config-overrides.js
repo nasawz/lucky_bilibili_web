@@ -15,7 +15,7 @@ const rewireWebpackOutput = require('react-app-rewire-output');
 const devServerCustom = () => (config) => {
   config.quiet = false;
   config.proxy = {
-    '/api': 'http://localhost:1447'
+    '/api': 'http://localhost:1337'
   };
   return config;
 };

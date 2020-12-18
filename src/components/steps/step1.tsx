@@ -25,7 +25,6 @@ export default function Step1(props: IStep1Props) {
           componentRef={(node) => {
             url_text = node;
           }}
-          value="https://www.bilibili.com/video/av61604041"
           validateOnLoad={false}
           validateOnFocusOut={true}
           onGetErrorMessage={_getErrorMessage}

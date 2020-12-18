@@ -1,20 +1,20 @@
-import Parse from '../api/parse';
 import store from 'store';
 import expirePlugin from 'store/plugins/expire';
 import * as _ from 'lodash';
 import uuid from 'uuid';
+import { app } from '../lib/tcb';
 
 // mock data start
-import { data } from './data';
-let expiration = new Date().getTime() + 10000 * 60000;
-store.set(`VLOG~https://www.bilibili.com/video/av61604041`, data, expiration);
+// import { data } from './data';
+// let expiration = new Date().getTime() + 10000 * 60000;
+// store.set(`VLOG~https://www.bilibili.com/video/av61604041`, data, expiration);
 // mock data end
 
 store.addPlugin(expirePlugin);
 export default {
   state: {
-    // vlog: { info: { title: '' }, replies: [] },
-    vlog: store.get(`VLOG~https://www.bilibili.com/video/av61604041`),
+    vlog: { info: { title: '' }, replies: [] },
+    // vlog: store.get(`VLOG~https://www.bilibili.com/video/av61604041`),
     awards: [{ title: `奖品名称`, count: 1, uuid: uuid.v1() }],
     setting: {
       once: false,
@@ -81,7 +81,14 @@ export default {
       try {
         let vlog = store.get(`VLOG~${url}`);
         if (!vlog) {
-          vlog = await Parse.Cloud.run('catch_vlog', { url });
+          const dataRes = await app
+            .callFunction({
+              name: 'catch-vlog',
+              data: {
+                url: url,
+              },
+            })
+          vlog = dataRes.result
           let expiration = new Date().getTime() + 60000;
           store.set(`VLOG~${url}`, vlog, expiration);
         }
