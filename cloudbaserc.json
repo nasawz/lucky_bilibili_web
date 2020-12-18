@@ -8,7 +8,7 @@
       "react": {
         "use": "@cloudbase/framework-plugin-website",
         "inputs": {
-          "installCommand": "npm i",
+          "installCommand": "yarn",
           "buildCommand": "npm run build",
           "outputPath": "build",
           "cloudPath": "{{env.deployPath}}",
