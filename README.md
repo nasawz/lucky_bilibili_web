@@ -1,40 +1,21 @@
-# B 站抽奖助手(UI 端)
+# Bilibili抽奖助手
 
-**效果图：**
+## 项目地址
 
-![WX20190817-142810@2x](http://md.nasawz.com/WX20190817-142810@2x.png)
+https://github.com/nasawz/lucky_bilibili_web
 
-## 项目说明：
+## 项目说明
 
-- 目前以 React 开发后台系统，大多数人都会选择 Antd 控件库。这个项目是为了尝试一些不同 UI 库，探索一下微软推出的 **UI Fabric**。
-- 数据管理上也没有用传统的 Redux 做管理，而是尝试了 react 新推出的**useState**。用到了也许是最简单的一个 React Hooks 状态管理器**flooks**。
-- 控件上也都是用**Function components**做的开发。
-- ~~API 层面采用到了**GraphQL**,并集成了一份 GraphQL 代码生成器：**graphql-code-generator**（需配合服务端使用）。~~
-- 内置**react-intl**支持多国语言功能，并附有生成语言文件脚本，扫描 src 文件夹下的代码，提取出语言文件并以 json 文件的形式存入 translations 文件夹下。
-- 前端项目的搭建采用了标准的**create react app**语法选用了**Typescript**。采用**react-app-rewired**对 webpack 编译做了定制化改造。
-- ~~后台程序采用了**parseplatform**做的开发(这是另一个项目)~~。
-- 后台采用了TCB云函数。
+基于腾讯云[CloudBase Framework](https://github.com/Tencent/cloudbase-framework)开发的一款帮助B站UP主恰饭视频做[抽奖活动的工具](https://data-max-7gn4veyyb4a2fa4e-1256312109.tcloudbaseapp.com/catch-vlog/#/home)。
 
----
-
-> 俗话说要 **学以致用** 所以我以上边列出的技术栈打造了一个功能完备的小工具 `B站抽奖助手`，下边是它的功能介绍。
-
+支持一键部署到腾讯云环境。
 ## 部署
-
 
 [![](https://main.qcloudimg.com/raw/67f5a389f1ac6f3b4d04c7256438e44f.svg)](https://console.cloud.tencent.com/tcb/env/index?action=CreateAndDeployCloudBaseProject&appUrl=https%3A%2F%2Fgithub.com%2Fnasawz%2Flucky_bilibili_web&branch=release)
 
-## 本地运行
+需要在腾讯云开启匿名登录权限。
 
-本项目为 UI 界面，内置了模拟数据。
-
-```bash
-# 安装依赖，或 npm i
-yarn
-
-# 运行
-yarn start
-```
+![image-20201221114805639](https://md-1256312109.cos.ap-beijing.myqcloud.com/uPic/image-20201221114805639.png)
 
 
 
@@ -53,18 +34,8 @@ yarn start
 
 - [UI Fabric](https://developer.microsoft.com/en-us/fabric#/)
 - [flooks](https://github.com/nanxiaobei/flooks)
-- [graphql-code-generator](https://graphql-code-generator.com)
+- [CloudBase Framework](https://github.com/Tencent/cloudbase-framework)
 - [create-react-app](https://github.com/facebook/create-react-app)
 - [react-app-rewired](https://github.com/timarney/react-app-rewired)
-- [parseplatform](https://parseplatform.org)
 - [react-intl](https://github.com/formatjs/react-intl)
 
----
-
-如果你觉得这个项目有点用就随缘给点赏钱吧。 (๑•̀ㅂ•́)و✧
-
-![IMG_6397](http://md.nasawz.com/IMG_6397.jpg)
-
-推荐一个低碳健康饮食的 Up ( \*￣ ▽ ￣)o ─═≡※:☆
-
-![WechatIMG1741](http://md.nasawz.com/WechatIMG1741.png)

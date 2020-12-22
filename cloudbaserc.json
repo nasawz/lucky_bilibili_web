@@ -33,7 +33,10 @@
               "name": "catch-vlog",
               "timeout": 60,
               "installDependency": true,
-              "handler": "index.main"
+              "handler": "index.main",
+              "aclRule": {
+                "invoke": true
+              }
             }
           ]
         }
