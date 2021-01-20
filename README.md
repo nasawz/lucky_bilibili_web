@@ -13,12 +13,6 @@ https://github.com/nasawz/lucky_bilibili_web
 
 [![](https://main.qcloudimg.com/raw/67f5a389f1ac6f3b4d04c7256438e44f.svg)](https://console.cloud.tencent.com/tcb/env/index?action=CreateAndDeployCloudBaseProject&appUrl=https%3A%2F%2Fgithub.com%2Fnasawz%2Flucky_bilibili_web&branch=release)
 
-需要在腾讯云开启匿名登录权限。
-
-![image-20201221114805639](https://md-1256312109.cos.ap-beijing.myqcloud.com/uPic/image-20201221114805639.png)
-
-
-
 ## 功能介绍
 
 - 提取 Up 主的视频资料与留言数据
