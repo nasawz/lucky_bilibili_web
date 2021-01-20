@@ -5,6 +5,17 @@
   "framework": {
     "name": "lucky-bilibili",
     "plugins": {
+      "auth": {
+        "use": "@cloudbase/framework-plugin-auth",
+        "inputs": {
+          "configs": [
+            {
+              "platform": "NONLOGIN",
+              "status": "ENABLE"
+            }
+          ]
+        }
+      },
       "react": {
         "use": "@cloudbase/framework-plugin-website",
         "inputs": {
@@ -19,7 +30,6 @@
             "cloudbaserc.js"
           ],
           "envVariables": {
-            "HTTP_REQ_URL": "{{env.httpReqUrl}}",
             "ENV_ID": "{{env.ENV_ID}}"
           }
         }
@@ -48,10 +58,6 @@
           "description": "部署路径",
           "required": true,
           "default": "/lucky-bilibili/"
-        },
-        "httpReqUrl": {
-          "description": "HTTP访问域名",
-          "required": true
         }
       }
     }
